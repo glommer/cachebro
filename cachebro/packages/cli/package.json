@@ -1,0 +1,12 @@
+{
+  "name": "cachebro",
+  "version": "0.2.0",
+  "type": "module",
+  "bin": {
+    "cachebro": "src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "@turso/cachebro": "workspace:*"
+  }
+}

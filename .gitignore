@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.cachebro/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+bun.lockb
+.tmp_test/

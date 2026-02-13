@@ -1,0 +1,5 @@
+{
+  "name": "cachebro-workspace",
+  "private": true,
+  "workspaces": ["packages/*"]
+}
