@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.svg" alt="cachebro" width="200" />
+</p>
+
 # cachebro
 
 File cache with diff tracking for AI coding agents. Powered by [Turso](https://turso.tech), a high-performance embedded database.
