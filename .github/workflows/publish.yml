@@ -5,8 +5,8 @@ on:
     types: [published]
 
 permissions:
-  contents: read
   id-token: write
+  contents: read
 
 jobs:
   publish:
@@ -20,10 +20,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-
-      - name: Upgrade npm for OIDC support
-        run: npm install -g npm@latest
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
 
       - run: bun install
 
