@@ -94,7 +94,7 @@ Set `CACHEBRO_DIR` to control where the cache database is stored (default: `.cac
 ### As an SDK
 
 ```typescript
-import { createCache } from "@turso/cachebro";
+import { createCache } from "cachebro";
 
 const { cache, watcher } = createCache({
   dbPath: "./my-cache.db",
@@ -137,8 +137,8 @@ watcher.close();
 
 ```
 packages/
-  sdk/     @turso/cachebro — the library
-           - CacheStore: content-addressed file cache backed by Turso (via @tursodatabase/database)
+  sdk/     cachebro — the core library
+           - CacheStore: content-addressed file cache backed by an embedded database
            - FileWatcher: fs.watch wrapper for change notification
            - computeDiff: line-based unified diff
   cli/     cachebro — batteries-included CLI + MCP server
