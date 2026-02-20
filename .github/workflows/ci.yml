@@ -22,7 +22,7 @@ jobs:
         run: bun run build
 
       - name: Test
-        run: bun test/smoke.ts
+        run: bun run test
 
       - name: Verify Node compatibility
         run: node dist/cli.mjs help

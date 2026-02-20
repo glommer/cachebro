@@ -15,7 +15,7 @@
   "scripts": {
     "build": "bun build packages/cli/src/index.ts --target node --external @tursodatabase/database --external @modelcontextprotocol/sdk --external zod --outfile dist/cli.mjs && node -e \"let f=require('fs');let c=f.readFileSync('dist/cli.mjs','utf8');f.writeFileSync('dist/cli.mjs',c.replace('#!/usr/bin/env bun','#!/usr/bin/env node'))\"",
     "prepublishOnly": "bun run build",
-    "test": "bun test/smoke.ts"
+    "test": "bun test"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",

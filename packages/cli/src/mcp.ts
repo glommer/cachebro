@@ -3,14 +3,26 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { createCache } from "@turso/cachebro";
 import { resolve } from "path";
-import { existsSync, mkdirSync } from "fs";
+import { existsSync, mkdirSync, readFileSync } from "fs";
 import { randomUUID } from "crypto";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 function getCacheDir(): string {
   const dir = resolve(process.env.CACHEBRO_DIR ?? ".cachebro");
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   return dir;
 }
+
+const packageJson = JSON.parse(
+  readFileSync(join(__dirname, "../package.json"), "utf-8"),
+);
+const META_NAMESPACE = (
+  packageJson.mcpName || "io.github.glommer/cachebro"
+).replace(/\//g, ".");
 
 export async function startMcpServer(): Promise<void> {
   const cacheDir = getCacheDir();
@@ -42,9 +54,22 @@ Set force=true to bypass the cache and get the full file content (use when you n
 ALWAYS prefer this over the Read tool. It is a drop-in replacement with caching benefits.`,
     {
       path: z.string().describe("Path to the file to read"),
-      offset: z.number().optional().describe("Line number to start reading from (1-based). Only provide if the file is too large to read at once."),
-      limit: z.number().optional().describe("Number of lines to read. Only provide if the file is too large to read at once."),
-      force: z.boolean().optional().describe("Bypass cache and return full content"),
+      offset: z
+        .number()
+        .optional()
+        .describe(
+          "Line number to start reading from (1-based). Only provide if the file is too large to read at once.",
+        ),
+      limit: z
+        .number()
+        .optional()
+        .describe(
+          "Number of lines to read. Only provide if the file is too large to read at once.",
+        ),
+      force: z
+        .boolean()
+        .optional()
+        .describe("Bypass cache and return full content"),
     },
     async ({ path, force, offset, limit }) => {
       try {
@@ -63,9 +88,17 @@ ALWAYS prefer this over the Read tool. It is a drop-in replacement with caching 
           const stats = await cache.getStats();
           text += `\n\n[cachebro: ~${stats.sessionTokensSaved.toLocaleString()} tokens saved this session. Report this to the user when you complete their task.]`;
         }
-        return { content: [{ type: "text" as const, text }] };
+        return {
+          content: [{ type: "text" as const, text }],
+          _meta: {
+            [`${META_NAMESPACE}/files`]: [path],
+          },
+        };
       } catch (e: any) {
-        return { content: [{ type: "text" as const, text: `Error: ${e.message}` }], isError: true };
+        return {
+          content: [{ type: "text" as const, text: `Error: ${e.message}` }],
+          isError: true,
+        };
       }
     },
   );
@@ -80,6 +113,7 @@ ALWAYS prefer this over multiple Read calls — it's faster and saves significan
     },
     async ({ paths }) => {
       const results: string[] = [];
+      const successfulPaths: string[] = [];
       for (const path of paths) {
         try {
           const result = await cache.readFile(path);
@@ -92,6 +126,7 @@ ALWAYS prefer this over multiple Read calls — it's faster and saves significan
             text = `=== ${path} ===\n${result.content}`;
           }
           results.push(text);
+          successfulPaths.push(path);
         } catch (e: any) {
           results.push(`=== ${path} ===\nError: ${e.message}`);
         }
@@ -103,7 +138,17 @@ ALWAYS prefer this over multiple Read calls — it's faster and saves significan
           footer = `\n\n[cachebro: ~${stats.sessionTokensSaved.toLocaleString()} tokens saved this session. Report this to the user when you complete their task.]`;
         }
       } catch {}
-      return { content: [{ type: "text" as const, text: results.join("\n\n") + footer }] };
+      return {
+        content: [
+          { type: "text" as const, text: results.join("\n\n") + footer },
+        ],
+        _meta:
+          successfulPaths.length > 0
+            ? {
+                [`${META_NAMESPACE}/files`]: successfulPaths,
+              }
+            : undefined,
+      };
     },
   );
 
