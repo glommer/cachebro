@@ -57,7 +57,9 @@ export class CacheStore {
 
   async init(): Promise<void> {
     if (this.initialized) return;
-    this.db = await connect(this.dbPath);
+    this.db = await connect(this.dbPath, {
+      experimental: ["multiprocess_wal"]
+    });
     await this.db.exec(SCHEMA);
     this.initialized = true;
   }
