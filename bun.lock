@@ -1,12 +1,11 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "cachebro-workspace",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.12.1",
-        "@tursodatabase/database": "^0.6.0-pre.27",
+        "@tursodatabase/database": "^0.6.0",
         "zod": "^3.24.0",
       },
       "devDependencies": {
@@ -29,7 +28,7 @@
       "name": "@turso/cachebro",
       "version": "0.1.0",
       "dependencies": {
-        "@tursodatabase/database": "^0.6.0-pre.27",
+        "@tursodatabase/database": "^0.6.0",
       },
     },
   },
@@ -40,17 +39,17 @@
 
     "@turso/cachebro": ["@turso/cachebro@workspace:packages/sdk"],
 
-    "@tursodatabase/database": ["@tursodatabase/database@0.6.0-pre.27", "", { "dependencies": { "@tursodatabase/database-common": "^0.6.0-pre.27" }, "optionalDependencies": { "@tursodatabase/database-darwin-arm64": "0.6.0-pre.27", "@tursodatabase/database-linux-arm64-gnu": "0.6.0-pre.27", "@tursodatabase/database-linux-x64-gnu": "0.6.0-pre.27", "@tursodatabase/database-win32-x64-msvc": "0.6.0-pre.27" } }, "sha512-Phku0NISkR9wBj4lyJh40kZ41d6Bbr+j7dz3znDqOVYSTObAzIWVJXJs3O8A6PRxoS81H9SooW6vFmHaC4Bw+w=="],
+    "@tursodatabase/database": ["@tursodatabase/database@0.6.0", "", { "dependencies": { "@tursodatabase/database-common": "^0.6.0" }, "optionalDependencies": { "@tursodatabase/database-darwin-arm64": "0.6.0", "@tursodatabase/database-linux-arm64-gnu": "0.6.0", "@tursodatabase/database-linux-x64-gnu": "0.6.0", "@tursodatabase/database-win32-x64-msvc": "0.6.0" } }, "sha512-EXHy76WVq+faYbt1qjuF7XDujgc5eZ8u9Wq+1EGVBLcPjJ3fVfvXplzNkgMUGDcS65UAWRrbs1vD4aNvx42Erw=="],
 
-    "@tursodatabase/database-common": ["@tursodatabase/database-common@0.6.0-pre.27", "", {}, "sha512-2sNi9iOfjoFasG1TIU/VHRgMxF+PyLmYIkeTGjpCgweHvoq/MaajIKzbOhTuaxCMOUbdvtXV368vSeaQU3MhIQ=="],
+    "@tursodatabase/database-common": ["@tursodatabase/database-common@0.6.0", "", {}, "sha512-5Dkv2r+H5Ir9cNTp+0QyesuQ/89WrEi8IKCppczDOqBeDrGskw1v82bnEQXAyxslt6xGexDznxqxcLtf83zn7A=="],
 
-    "@tursodatabase/database-darwin-arm64": ["@tursodatabase/database-darwin-arm64@0.6.0-pre.27", "", { "os": "darwin", "cpu": "arm64" }, "sha512-Zgyz95SjJxewr2Mb+fXDT5Uzj5HHDTm3ihPGH79QKCB5U5/YJlfrEj8P5jxhmUWhVgW/SlpnZ9kfKhuwwuS4vQ=="],
+    "@tursodatabase/database-darwin-arm64": ["@tursodatabase/database-darwin-arm64@0.6.0", "", { "os": "darwin", "cpu": "arm64" }, "sha512-nnrJrO3T+u9r62snDHktMV7pRMG3AiXEOqhSwX4idkWvW7Fp8/AO+PYbsGsC25wdr/AtFHZ+ZD3g3WkwuaTGgQ=="],
 
-    "@tursodatabase/database-linux-arm64-gnu": ["@tursodatabase/database-linux-arm64-gnu@0.6.0-pre.27", "", { "os": "linux", "cpu": "arm64" }, "sha512-05YY2ymTEK3s5by55hhn5zMJIbOvA9L60iVUktiapUPaqBn2R0UbVkSOgismmA951WkU4M6mnerTnxonNLWCBw=="],
+    "@tursodatabase/database-linux-arm64-gnu": ["@tursodatabase/database-linux-arm64-gnu@0.6.0", "", { "os": "linux", "cpu": "arm64" }, "sha512-/WazziVg9QCcZaNan1gHEZMbC6K89MDkpgjUKV57GkcxTnZkSxrGpfVxqZwRTs4Yg+xjrf1bEGDDhm8Naez3tw=="],
 
-    "@tursodatabase/database-linux-x64-gnu": ["@tursodatabase/database-linux-x64-gnu@0.6.0-pre.27", "", { "os": "linux", "cpu": "x64" }, "sha512-jMUElRPYmTSoBGLwmsS2uO4phq+jTZyPWjVbieuAPdbcTc+vBY/FKqxv/ThlOzS8tNLvoC/D0o912tkMam6LJw=="],
+    "@tursodatabase/database-linux-x64-gnu": ["@tursodatabase/database-linux-x64-gnu@0.6.0", "", { "os": "linux", "cpu": "x64" }, "sha512-l4RDTG6elovdYsDy+Zq7WqK4x/V7HT6P7G2RlujwgPkpUAmyaL10FtSyTuohcCNUheQBsbMl0044yHzQVLEeTw=="],
 
-    "@tursodatabase/database-win32-x64-msvc": ["@tursodatabase/database-win32-x64-msvc@0.6.0-pre.27", "", { "os": "win32", "cpu": "x64" }, "sha512-7EqlOqLIm416AIWIEYui+6B4S6JTGBVzMLA9LHrDJB9hsurYtLTOvwXgzEoc7qOrUxz0/ymQB/1eSEJWkZkPxg=="],
+    "@tursodatabase/database-win32-x64-msvc": ["@tursodatabase/database-win32-x64-msvc@0.6.0", "", { "os": "win32", "cpu": "x64" }, "sha512-tlNYO0FJQLvB2P21Vh2y4VBlDKse5OZS7pBssiOez9aukm8urSh2Ec/9GWMqcJ2CXMa3Lmz0AhDDl6nBkZ9fOQ=="],
 
     "@types/node": ["@types/node@25.2.3", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-m0jEgYlYz+mDJZ2+F4v8D1AyQb+QzsNqRuI7xg1VQX/KlKS0qT9r1Mo16yo5F/MtifXFgaofIFsdFMox2SxIbQ=="],
 

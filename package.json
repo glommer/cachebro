@@ -1,6 +1,6 @@
 {
   "name": "cachebro",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "mcpName": "io.github.glommer/cachebro",
   "description": "File cache with diff tracking for AI coding agents. Drop-in replacement for file reads that saves ~26% tokens.",
   "type": "module",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
-    "@tursodatabase/database": "^0.6.0-pre.27",
+    "@tursodatabase/database": "^0.6.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {
