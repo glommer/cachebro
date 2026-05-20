@@ -29,7 +29,7 @@ jobs:
         run: bun run build
 
       - name: Test
-        run: bun test/smoke.ts
+        run: bun test/smoke.test.ts
 
       - name: Publish
         run: npm publish --provenance --access public
