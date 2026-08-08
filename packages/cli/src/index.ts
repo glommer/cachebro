@@ -1,5 +1,6 @@
 #!/usr/bin/env bun
 import { startMcpServer } from "./mcp.js";
+import { applyEdits, modify, parse as parseJsonc, type ParseError } from "jsonc-parser";
 
 const command = process.argv[2];
 
@@ -61,12 +62,6 @@ if (!command || command === "serve") {
       key: "mcpServers",
       entry: mcpServersEntry,
     },
-    {
-      name: "OpenCode",
-      path: join(xdgConfig, "opencode", "opencode.json"),
-      key: "mcp",
-      entry: opencodeMcpEntry,
-    },
   ];
 
   let configured = 0;
@@ -96,6 +91,37 @@ if (!command || command === "serve") {
     writeFileSync(target.path, JSON.stringify(config, null, 2) + "\n");
     console.log(`  ${target.name}: configured (${target.path})`);
     configured++;
+  }
+
+  // OpenCode: prefer opencode.jsonc over opencode.json
+  // Use jsonc-parser modify()/applyEdits() to preserve
+  // comments and formatting, mirroring OpenCode's addMcpToConfig().
+  const opencodeDir = join(xdgConfig, "opencode");
+  if (existsSync(opencodeDir)) {
+    const candidates = [
+      join(opencodeDir, "opencode.jsonc"),
+      join(opencodeDir, "opencode.json"),
+    ];
+    const target = candidates.find(existsSync) ?? candidates[0];
+    const raw = existsSync(target) ? readFileSync(target, "utf-8") : "{}";
+    const text = raw.trim() ? raw : "{}";
+
+    const errors: ParseError[] = [];
+    const parsed = parseJsonc(text, errors, { allowTrailingComma: true });
+    if (errors.length) {
+      console.log(`OpenCode: config invalid, skipping (${target})`);
+    } else if ((parsed as any)?.mcp?.cachebro) {
+      console.log(`OpenCode: already configured (${target})`);
+      configured++;
+    } else {
+      const edits = modify(text, ["mcp", "cachebro"], opencodeMcpEntry, {
+        formattingOptions: { tabSize: 2, insertSpaces: true },
+      });
+      const updated = applyEdits(text, edits);
+      writeFileSync(target, updated.endsWith("\n") ? updated : updated + "\n");
+      console.log(`OpenCode: configured (${target})`);
+      configured++;
+    }
   }
 
   if (configured === 0) {
